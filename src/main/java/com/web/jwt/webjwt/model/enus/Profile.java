@@ -5,9 +5,9 @@ import com.web.jwt.webjwt.model.exceptions.ProfileNotFoundException;
 import java.util.Arrays;
 
 public enum Profile {
-    OPERATOR(1, "ROLE_OPERATOR"),
-    MANAGER(2, "ROLE_MANAGER"),
-    CLIENT(3, "ROLE_CLIENT");
+    ROLE_OPERATOR(1, "OPERATOR"),
+    ROLE_MANAGER(2, "MANAGER"),
+    ROLE_CLIENT(3, "CLIENT");
 
     private Integer id;
     private String name;

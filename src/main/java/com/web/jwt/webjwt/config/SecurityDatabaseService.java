@@ -23,10 +23,11 @@ public class SecurityDatabaseService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User userEntity = userService.findByUsername(username);
+        System.out.println(userEntity);
         Set<GrantedAuthority> authorities =
                 userEntity.getProfiles()
                         .stream()
-                        .map(p -> new SimpleGrantedAuthority(p.getName()))
+                        .map(p -> new SimpleGrantedAuthority(p.name()))
                         .collect(Collectors.toSet());
 
         UserDetails userDetails =

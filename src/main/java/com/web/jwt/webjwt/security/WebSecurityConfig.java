@@ -1,6 +1,7 @@
 package com.web.jwt.webjwt.security;
 
 import com.web.jwt.webjwt.config.SecurityDatabaseService;
+import com.web.jwt.webjwt.model.enus.Profile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,10 +13,15 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
+import java.util.Arrays;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final static String[] ROLES_OPERATOR = {Profile.ROLE_OPERATOR.getName()};
+    private final static String[] ROLES_MANAGER = {Profile.ROLE_MANAGER.getName()};
 
     @Autowired
     private SecurityDatabaseService securityDatabaseService;
@@ -30,10 +36,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
+                .antMatchers("/", "/h2-console/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
-                .antMatchers("/managers").hasAnyRole("MANAGERS")
-                .antMatchers("/users").hasAnyRole("USERS", "MANAGERS")
+                .antMatchers("/managers").hasAnyRole(ROLES_MANAGER)
+                .antMatchers("/users").hasAnyRole(ROLES_OPERATOR)
                 .anyRequest().authenticated().and().httpBasic();
     }
 
