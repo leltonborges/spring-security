@@ -2,6 +2,7 @@ package com.web.jwt.webjwt.services;
 
 import com.web.jwt.webjwt.model.User;
 import com.web.jwt.webjwt.repositories.UserRepository;
+import com.web.jwt.webjwt.services.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +16,10 @@ public class UserService implements Serializable {
     @Autowired
     private UserRepository userRepository;
 
-    public Optional<User> findByUsername(String name) {
-        return userRepository.findByUsername(name);
+    public User findByUsername(String name) {
+        return userRepository
+                .findByUsername(name)
+                .orElseThrow(() -> new UserNotFoundException("Not found userName: " + name));
     }
 
     public <S extends User> S save(S entity) {

@@ -21,6 +21,10 @@ public enum Profile {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public Profile fromProfile(Integer idProfile){
         for(Profile p: Profile.values()){
             if(p.getId().equals(idProfile))
