@@ -2,7 +2,6 @@ package com.web.jwt.webjwt.config;
 
 import com.web.jwt.webjwt.model.User;
 import com.web.jwt.webjwt.services.UserService;
-import org.apache.catalina.UserDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,7 +22,7 @@ public class SecurityDatabaseService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User userEntity = userService.findByUsername(username);
-        System.out.println(userEntity);
+
         Set<GrantedAuthority> authorities =
                 userEntity.getProfiles()
                         .stream()
